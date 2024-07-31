@@ -124,13 +124,18 @@ function App() {
 
     setFilteredBadges(newFilteredBadges)
 
-    let filteredData = originData.filter(
-      (item) =>
-        newFilteredBadges.includes(item.sex) ||
+    let filteredData = [...originData]
+
+    if (newFilteredBadges.some((item) => symptomData.includes(item))) {
+      filteredData = filteredData.filter((item) =>
         newFilteredBadges.includes(item.symptom)
-    )
-    if (!newFilteredBadges.length) {
-      filteredData = originData
+      )
+    }
+
+    if (newFilteredBadges.some((item) => sexData.includes(item))) {
+      filteredData = filteredData.filter((item) =>
+        newFilteredBadges.includes(item.sex)
+      )
     }
 
     setData(filteredData)
@@ -205,7 +210,6 @@ function App() {
           )}
         </AutoSizer>
       </List>
-      <Button></Button>
     </>
   )
 }
