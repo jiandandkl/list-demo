@@ -87,6 +87,7 @@ const badgesData = [
 function App() {
   const [data, setData] = useState(originData)
   const [count, setCount] = useState(rowCount)
+  const [searchContent, setSearchContent] = useState('')
   const [filteredBadges, setFilteredBadges] = useState([] as string[])
 
   /**
@@ -94,9 +95,22 @@ function App() {
    * @param val 输入的值
    */
   const inputChange = (val: string) => {
-    const filteredData = originData.filter((item) => item.name.includes(val))
-    setCount(filteredData.length)
+    let filteredData = [...originData]
+    filteredData = filteredData.filter((item) => item.name.includes(val))
+
+    if (filteredBadges.some((item) => symptomData.includes(item))) {
+      filteredData = filteredData.filter((item) =>
+        filteredBadges.includes(item.symptom)
+      )
+    }
+    if (filteredBadges.some((item) => sexData.includes(item))) {
+      filteredData = filteredData.filter((item) =>
+        filteredBadges.includes(item.sex)
+      )
+    }
+    setSearchContent(val)
     setData(filteredData)
+    setCount(filteredData.length)
   }
 
   /**
@@ -122,22 +136,19 @@ function App() {
       )
     }
 
-    setFilteredBadges(newFilteredBadges)
-
     let filteredData = [...originData]
-
     if (newFilteredBadges.some((item) => symptomData.includes(item))) {
-      filteredData = filteredData.filter((item) =>
-        newFilteredBadges.includes(item.symptom)
-      )
+      filteredData = filteredData
+        .filter((item) => newFilteredBadges.includes(item.symptom))
+        .filter((item) => item.name.includes(searchContent))
     }
-
     if (newFilteredBadges.some((item) => sexData.includes(item))) {
-      filteredData = filteredData.filter((item) =>
-        newFilteredBadges.includes(item.sex)
-      )
+      filteredData = filteredData
+        .filter((item) => newFilteredBadges.includes(item.sex))
+        .filter((item) => item.name.includes(searchContent))
     }
 
+    setFilteredBadges(newFilteredBadges)
     setData(filteredData)
     setCount(filteredData.length)
   }
