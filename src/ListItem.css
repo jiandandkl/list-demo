@@ -1,0 +1,25 @@
+.list-item {
+  /* height: 150px; */
+  text-align: left;
+  .divider {
+    font-weight: 700;
+    border-width: 2px;
+    border-color: black;
+    height: 1.2rem;
+  }
+  .info {
+    font-size: 12px;
+  }
+  .adm-list-item {
+    padding-left: 0;
+  }
+  .adm-list-item-content {
+    border-top: none;
+  }
+}
+
+.spacer {
+  height: 50px;
+  margin: 0 0 -50px 0;
+  background: transparent;
+}
